@@ -49,13 +49,13 @@ export default function Hero() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top top",
-            end: "top+=50% top",
-            scrub: 0.5,
+            end: "top+=30% top",
+            scrub: 0.25,
           },
         }
       );
 
-      const statStarts = ["top+=8% top", "top+=18% top", "top+=28% top", "top+=38% top"];
+      const statStarts = ["top+=5% top", "top+=10% top", "top+=16% top", "top+=22% top"];
 
       statItems.forEach((stat, index) => {
         gsap.fromTo(
@@ -69,7 +69,7 @@ export default function Hero() {
             scrollTrigger: {
               trigger: sectionRef.current,
               start: statStarts[index],
-              end: index === statItems.length - 1 ? "top+=50% top" : "top+=" + (14 + index * 4) + "% top",
+              end: index === statItems.length - 1 ? "top+=30% top" : "top+=" + (8 + index * 3) + "% top",
               toggleActions: "play none none reverse",
             },
           }
@@ -81,8 +81,8 @@ export default function Hero() {
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top+=12% top",
-          end: "top+=25% top",
+          start: "top+=6% top",
+          end: "top+=15% top",
           scrub: true,
         },
       });
