@@ -70,7 +70,8 @@ body {
 }
 
 .hero-copy {
-  max-width: 930px;
+  width: 100%;
+  max-width: 1180px;
 }
 
 .hero-kicker {
@@ -83,10 +84,12 @@ body {
 
 .hero-title {
   margin: 0;
-  font-size: clamp(3rem, 9vw, 8rem);
-  line-height: 0.84;
+  max-width: 100%;
+  font-size: clamp(3.4rem, 6.4vw, 6.5rem);
+  line-height: 0.9;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 
@@ -107,13 +110,14 @@ body {
 .stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 52px;
-  max-width: 900px;
+  gap: 18px;
+  width: min(100%, 1080px);
+  margin-top: 50px;
 }
 
 .stat {
-  padding: 18px 18px 20px;
+  min-width: 0;
+  padding: 18px 4px 20px;
   border-top: 1px solid var(--ink);
   opacity: 0;
   transform: translateY(22px);
@@ -135,8 +139,8 @@ body {
 .motion-track {
   position: absolute;
   inset-inline: 0;
-  bottom: 11vh;
-  height: 30%;
+  bottom: 2vh;
+  height: 24%;
   pointer-events: none;
 }
 
@@ -144,7 +148,7 @@ body {
   position: absolute;
   left: -8vw;
   right: -8vw;
-  bottom: 23%;
+  bottom: 30%;
   height: 1px;
   background: rgba(17, 18, 15, 0.34);
 }
@@ -153,7 +157,7 @@ body {
   position: absolute;
   left: -8vw;
   right: -8vw;
-  bottom: calc(23% - 9px);
+  bottom: calc(30% - 9px);
   height: 18px;
   background: repeating-linear-gradient(
     to right,
@@ -164,8 +168,8 @@ body {
 
 .car {
   position: absolute;
-  left: 5%;
-  bottom: 16%;
+  right: -3%;
+  bottom: 26%;
   width: clamp(150px, 22vw, 250px);
   transform: translateX(0);
   filter: drop-shadow(0 20px 20px rgba(17, 18, 15, 0.12));
@@ -244,8 +248,9 @@ body {
   }
 
   .hero-title {
-    font-size: clamp(2.8rem, 15vw, 5.7rem);
-    letter-spacing: 0.045em;
+    font-size: clamp(2.6rem, 11vw, 5rem);
+    letter-spacing: 0.025em;
+    white-space: normal;
   }
 
   .stats {
@@ -258,13 +263,13 @@ body {
   }
 
   .motion-track {
-    bottom: 4vh;
-    height: 27%;
+    bottom: 2vh;
+    height: 23%;
   }
 
   .car {
-    left: -8%;
-    bottom: 13%;
+    right: -14%;
+    bottom: 26%;
     width: 180px;
   }
 
