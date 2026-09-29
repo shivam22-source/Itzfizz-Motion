@@ -54,35 +54,35 @@ export default function Hero() {
           carRef.current,
           { x: "-34vw" },
           {
-            x: "110vw",
+            x: "108vw",
             ease: "none",
-            duration: 1,
+            duration: 0.55,
           },
           0
         )
         .fromTo(
           statItems[0],
-          { opacity: 0.15, y: 28 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
-          0.05
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
+          0.06
         )
         .fromTo(
           statItems[1],
-          { opacity: 0.15, y: 28 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
-          0.27
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
+          0.20
         )
         .fromTo(
           statItems[2],
-          { opacity: 0.15, y: 28 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
-          0.49
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
+          0.34
         )
         .fromTo(
           statItems[3],
-          { opacity: 0.15, y: 28 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
-          0.71
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
+          0.48
         );
 
       gsap.to(cueRef.current, {
