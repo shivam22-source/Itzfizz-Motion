@@ -61,8 +61,8 @@ export default function Hero() {
         .to(
           carRef.current,
           {
-            x: () => window.innerWidth * 1.08,
-            rotation: 1.5,
+            x: () => -window.innerWidth * 0.95,
+            rotation: -1.5,
             ease: "none",
           },
           0
