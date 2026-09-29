@@ -51,46 +51,21 @@ export default function Hero() {
 
       gsap.fromTo(
         carRef.current,
-        { x: "80vw" },
+        { x: "-32vw" },
         {
-          x: "-60vw",
+          x: "105vw",
           ease: "none",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top top",
             end: "bottom bottom",
-            scrub: true,
+            scrub: 1,
           },
         }
       );
 
-      gsap.to(titleRef.current, {
-        y: -85,
-        opacity: 0.45,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-        },
-      });
-
-      gsap.to(statsRef.current, {
-        y: -45,
-        opacity: 0.32,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-        },
-      });
-
       gsap.to(cueRef.current, {
         opacity: 0,
-        y: 10,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
