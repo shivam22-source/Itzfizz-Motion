@@ -1,20 +1,22 @@
+"use client";
+
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const stats = [
-  { value: "48%", label: "illustrative speed lift" },
-  { value: "32%", label: "illustrative reach lift" },
-  { value: "76%", label: "illustrative engagement" },
-  { value: "91%", label: "illustrative satisfaction" },
+  { value: "58%", label: "Increase in pick up point use", style: "stat-yellow" },
+  { value: "27%", label: "Increase in pick up point use", style: "stat-dark" },
+  { value: "23%", label: "Decreased in customer phone calls", style: "stat-blue" },
+  { value: "40%", label: "Decreased in customer phone calls", style: "stat-orange" },
 ];
 
 export default function Hero() {
   const sectionRef = useRef(null);
+  const bannerRef = useRef(null);
   const titleRef = useRef(null);
-  const statsRef = useRef(null);
   const carRef = useRef(null);
-  const cueRef = useRef(null);
+  const statRefs = useRef([]);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -25,79 +27,59 @@ export default function Hero() {
 
     const context = gsap.context(() => {
       const titleLetters = titleRef.current.querySelectorAll("span");
-      const statItems = statsRef.current.querySelectorAll(".stat");
 
-      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const intro = gsap.timeline({
+        defaults: { ease: "power3.out" },
+      });
 
       intro
-        .to(titleLetters, {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.045,
-        })
-        .to(
-          statItems,
+        .fromTo(
+          bannerRef.current,
+          { scaleX: 0, transformOrigin: "center center" },
+          { scaleX: 1, duration: 0.9 }
+        )
+        .fromTo(
+          titleLetters,
+          {
+            opacity: 0,
+            y: 28,
+            letterSpacing: "0.12em",
+          },
+          {
+            opacity: 1,
+            y: 0,
+            letterSpacing: "0.035em",
+            duration: 1,
+            stagger: 0.04,
+          },
+          "-=0.55"
+        )
+        .fromTo(
+          statRefs.current.filter(Boolean),
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
             duration: 0.55,
-            stagger: 0.1,
+            stagger: 0.12,
           },
-          "-=0.2"
+          "-=0.45"
         );
 
-      const scrollTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-          invalidateOnRefresh: true,
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.35,
+        onUpdate: (self) => {
+          const x = 80 - self.progress * 160;
+
+          gsap.set(carRef.current, {
+            x: x + "vw",
+            force3D: true,
+          });
         },
       });
-
-      scrollTimeline
-        .fromTo(
-          carRef.current,
-          {
-            x: () => window.innerWidth * 0.8,
-            rotation: 1.5,
-          },
-          {
-            x: () => -window.innerWidth * 0.6,
-            rotation: -1.5,
-            ease: "none",
-          },
-          0
-        )
-        .to(
-          titleRef.current,
-          {
-            y: -85,
-            opacity: 0.45,
-            ease: "none",
-          },
-          0
-        )
-        .to(
-          statsRef.current,
-          {
-            y: -45,
-            opacity: 0.32,
-            ease: "none",
-          },
-          0
-        )
-        .to(
-          cueRef.current,
-          {
-            opacity: 0,
-            y: 10,
-            ease: "none",
-          },
-          0.08
-        );
     }, sectionRef);
 
     return () => context.revert();
@@ -107,44 +89,54 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="hero" aria-labelledby="hero-title">
-      <div className="hero-grid" aria-hidden="true" />
-
       <div className="hero-sticky">
-        <div className="page-shell hero-content">
-          <div className="hero-copy">
-            <p className="hero-kicker">Scroll-driven digital motion</p>
+        <div className="hero-background" aria-hidden="true" />
 
-            <h1 id="hero-title" ref={titleRef} className="hero-title">
-              {headline.split("").map((character, index) => (
-                <span key={index}>
-                  {character === " " ? "\u00a0" : character}
-                </span>
-              ))}
-            </h1>
+        <div ref={bannerRef} className="hero-banner" aria-hidden="true" />
 
-            <p className="hero-note">
-              A focused interaction study built around scroll progress, clean
-              typography, and one visual that moves with you.
-            </p>
+        <div className="hero-shell">
+          <p className="hero-kicker">Scroll-driven digital motion</p>
 
-            <div
-              ref={statsRef}
-              className="stats"
-              aria-label="Illustrative metrics"
-            >
-              {stats.map((stat) => (
-                <div className="stat" key={stat.value}>
-                  <div className="stat-value">{stat.value}</div>
-                  <div className="stat-label">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+          <h1 id="hero-title" ref={titleRef} className="hero-title">
+            {headline.split("").map((character, index) => (
+              <span key={index}>
+                {character === " " ? "\u00a0" : character}
+              </span>
+            ))}
+          </h1>
+
+          <div className="stats stats-top" aria-label="Illustrative metrics">
+            {stats.slice(0, 2).map((stat, index) => (
+              <article
+                className={`stat-card ${stat.style}`}
+                key={stat.value}
+                ref={(element) => {
+                  statRefs.current[index] = element;
+                }}
+              >
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))}
           </div>
-        </div>
 
-        <div className="motion-track" aria-hidden="true">
-          <div className="track-line" />
-          <div className="track-dash" />
+          <div className="stats stats-bottom" aria-label="Illustrative metrics">
+            {stats.slice(2).map((stat, index) => (
+              <article
+                className={`stat-card ${stat.style}`}
+                key={stat.value}
+                ref={(element) => {
+                  statRefs.current[index + 2] = element;
+                }}
+              >
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))}
+          </div>
+
+          <div className="track-line" aria-hidden="true" />
+          <div className="track-dash" aria-hidden="true" />
 
           <svg
             ref={carRef}
@@ -166,7 +158,6 @@ export default function Hero() {
             <path
               d="M106 49h68c6 0 11 3 15 7l18 21H92l12-21c1-4 5-7 8-7Z"
               fill="#cbd0c2"
-              opacity="0.92"
             />
             <path
               d="M127 50h42l11 23h-61Z"
@@ -181,28 +172,12 @@ export default function Hero() {
               d="M43 90h14c4 0 7-3 7-7V72c0-4-3-7-7-7H43Z"
               fill="#d4ff4f"
             />
-            <rect
-              x="249"
-              y="82"
-              width="13"
-              height="7"
-              rx="3.5"
-              fill="#d4ff4f"
-            />
-            <rect
-              x="160"
-              y="87"
-              width="26"
-              height="5"
-              rx="2.5"
-              fill="#d4ff4f"
-              opacity="0.75"
-            />
+            <rect x="249" y="82" width="13" height="7" rx="3.5" fill="#d4ff4f" />
           </svg>
-        </div>
 
-        <div ref={cueRef} className="page-shell scroll-cue" aria-hidden="true">
-          Scroll to move
+          <div className="scroll-cue" aria-hidden="true">
+            Scroll to move
+          </div>
         </div>
       </div>
     </section>
