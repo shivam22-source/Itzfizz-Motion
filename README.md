@@ -1,5 +1,9 @@
 # Itzfizz Motion
 
+## Live Demo
+
+[Itzfizz Motion](https://itzfizz-motion-mu.vercel.app/)
+
 A React + Vite frontend assignment built around a scroll-driven hero animation for Itzfizz Digital.
 
 ## What is included
