@@ -1,13 +1,14 @@
 # Itzfizz Motion — Copilot Instructions
 
-This repository is a small frontend assignment: a polished scroll-driven hero animation for Itzfizz Digital.
+This repository is a small React + Vite frontend assignment: a polished scroll-driven hero animation for Itzfizz Digital.
 
 ## Stack
-- Next.js / React
+- React
+- Vite
 - Tailwind CSS
 - GSAP with ScrollTrigger
 - Modern JavaScript/JSX
-- No backend, database, auth, or extra services unless explicitly requested.
+- No backend, database, auth, Next.js, or extra services unless explicitly requested.
 
 ## Coding style
 - Write code like a practical human developer maintaining a small project.
@@ -17,7 +18,7 @@ This repository is a small frontend assignment: a polished scroll-driven hero an
 - Prefer clear variable names and straightforward control flow over clever one-liners.
 - Do not generate generic AI-style comments. Comment only when the reason for a decision is not obvious from the code.
 - Do not add placeholder architecture, speculative APIs, or unused configuration.
-- Avoid unnecessary state. For animation state, prefer GSAP/DOM transforms where appropriate instead of React state on every scroll tick.
+- Avoid unnecessary state. For animation state, prefer GSAP/DOM transforms rather than React state on every scroll tick.
 - Keep diffs focused: change only what the task requires.
 
 ## Animation requirements
@@ -37,13 +38,13 @@ This repository is a small frontend assignment: a polished scroll-driven hero an
 - Keep the visual design clean and restrained. Avoid adding unrelated sections or effects just to make the project larger.
 
 ## Validation
-For non-trivial changes, leave behind the smallest useful check: a focused test, self-check, or a documented manual verification step. Do not introduce a testing framework solely for a trivial change.
+For non-trivial changes, leave behind the smallest useful check: a focused test, self-check, or documented manual verification step. Do not introduce a testing framework solely for a trivial change.
 Before considering work complete:
-1. Run the project build/lint commands available in package.json.
+1. Run the build command from package.json.
 2. Check the hero at desktop and mobile widths.
 3. Verify scroll forward and backward.
 4. Verify the initial-load animation.
 5. Check for console errors and broken asset paths.
 
 ## Dependency rule
-Before adding a package, check whether Next.js, React, Tailwind, GSAP, or the browser already provides the needed capability. Do not add a dependency for convenience alone.
+Before adding a package, check whether Vite, React, Tailwind, GSAP, or the browser already provides the needed capability. Do not add a dependency for convenience alone.
