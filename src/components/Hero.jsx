@@ -58,10 +58,14 @@ export default function Hero() {
       });
 
       scrollTimeline
-        .to(
+        .fromTo(
           carRef.current,
           {
-            x: () => -window.innerWidth * 0.95,
+            x: () => window.innerWidth * 0.8,
+            rotation: 1.5,
+          },
+          {
+            x: () => -window.innerWidth * 0.6,
             rotation: -1.5,
             ease: "none",
           },
