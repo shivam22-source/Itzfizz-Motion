@@ -1,5 +1,3 @@
-"use client";
-
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -114,8 +112,8 @@ export default function Hero() {
 
             <h1 id="hero-title" ref={titleRef} className="hero-title">
               {headline.split("").map((character, index) => (
-                <span key={`${character}-${index}`}>
-                  {character === " " ? " " : character}
+                <span key={index}>
+                  {character === " " ? "\u00a0" : character}
                 </span>
               ))}
             </h1>
