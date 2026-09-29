@@ -50,7 +50,7 @@ export default function Hero() {
             trigger: sectionRef.current,
             start: "top top",
             end: "top+=30% top",
-            scrub: 0.25,
+            scrub: 1,
           },
         }
       );
