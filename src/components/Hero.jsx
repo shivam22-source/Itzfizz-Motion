@@ -25,44 +25,65 @@ export default function Hero() {
 
     const context = gsap.context(() => {
       const titleLetters = titleRef.current.querySelectorAll("span");
-      const statItems = statsRef.current.querySelectorAll(".stat");
+      const statItems = Array.from(
+        statsRef.current.querySelectorAll(".stat")
+      );
 
       const intro = gsap.timeline({
         defaults: { ease: "power3.out" },
       });
 
-      intro
-        .to(titleLetters, {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.045,
-        })
-        .to(
-          statItems,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.55,
-            stagger: 0.1,
-          },
-          "-=0.2"
-        );
+      intro.to(titleLetters, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.045,
+      });
 
-      gsap.fromTo(
-        carRef.current,
-        { x: "-32vw" },
-        {
-          x: "105vw",
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1,
+      const scrollTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: true,
+        },
+      });
+
+      scrollTimeline
+        .fromTo(
+          carRef.current,
+          { x: "-34vw" },
+          {
+            x: "110vw",
+            ease: "none",
+            duration: 1,
           },
-        }
-      );
+          0
+        )
+        .fromTo(
+          statItems[0],
+          { opacity: 0.15, y: 28 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
+          0.05
+        )
+        .fromTo(
+          statItems[1],
+          { opacity: 0.15, y: 28 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
+          0.27
+        )
+        .fromTo(
+          statItems[2],
+          { opacity: 0.15, y: 28 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
+          0.49
+        )
+        .fromTo(
+          statItems[3],
+          { opacity: 0.15, y: 28 },
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.2 },
+          0.71
+        );
 
       gsap.to(cueRef.current, {
         opacity: 0,
@@ -70,7 +91,7 @@ export default function Hero() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "bottom bottom",
+          end: "top+=25% top",
           scrub: true,
         },
       });
