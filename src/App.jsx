@@ -2,7 +2,7 @@ import Hero from "./components/Hero";
 
 export default function App() {
   return (
-    <main>
+    <main className="min-h-screen overflow-x-hidden">
       <Hero />
 
       <section className="closing-section" aria-labelledby="closing-title">
