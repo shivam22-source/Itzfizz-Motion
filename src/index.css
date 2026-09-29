@@ -168,7 +168,7 @@ body {
 
 .car {
   position: absolute;
-  right: -3%;
+  left: 0;
   bottom: 26%;
   width: clamp(150px, 22vw, 250px);
   transform: translateX(0);
@@ -268,7 +268,7 @@ body {
   }
 
   .car {
-    right: -14%;
+    left: 0;
     bottom: 26%;
     width: 180px;
   }
