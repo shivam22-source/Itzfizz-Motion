@@ -88,7 +88,7 @@ body {
   width: 100vw;
   margin: 0 0 24px;
   margin-left: calc((1180px - 100vw) / 2);
-  font-size: clamp(3rem, 9vw, 9rem);
+  font-size: clamp(3rem, 8vw, 9rem);
   line-height: 0.84;
   font-weight: 800;
   letter-spacing: 0.06em;
