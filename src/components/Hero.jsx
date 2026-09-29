@@ -12,6 +12,7 @@ const stats = [
 export default function Hero() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
+  const noteRef = useRef(null);
   const statsRef = useRef(null);
   const carRef = useRef(null);
   const cueRef = useRef(null);
@@ -20,6 +21,12 @@ export default function Hero() {
     gsap.registerPlugin(ScrollTrigger);
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(titleRef.current.querySelectorAll("span"), { opacity: 1, y: 0 });
+      gsap.set(noteRef.current, { opacity: 1, y: 0 });
+      gsap.set(statsRef.current.querySelectorAll(".stat"), {
+        opacity: 1,
+        y: 0,
+      });
       return undefined;
     }
 
@@ -33,56 +40,112 @@ export default function Hero() {
         defaults: { ease: "power3.out" },
       });
 
-      intro.to(titleLetters, {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        stagger: 0.045,
+      intro
+        .to(titleLetters, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.045,
+        })
+        .to(
+          noteRef.current,
+          {
+            opacity: 0.35,
+            y: 0,
+            duration: 0.45,
+          },
+          "-=0.3"
+        )
+        .to(
+          statItems,
+          {
+            opacity: 0.18,
+            y: 0,
+            duration: 0.35,
+            stagger: 0.1,
+          },
+          "-=0.25"
+        );
+
+      const scrollTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.7,
+          invalidateOnRefresh: true,
+        },
       });
 
-      gsap.fromTo(
-        carRef.current,
-        { x: "-34vw" },
-        {
-          x: "108vw",
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "top+=45% top",
-            scrub: 1.1,
+      scrollTimeline
+        .fromTo(
+          carRef.current,
+          { x: 0 },
+          {
+            x: () => window.innerWidth - carRef.current.getBoundingClientRect().width,
+            ease: "none",
+            duration: 1,
           },
-        }
-      );
-
-      const statStarts = ["top+=7% top", "top+=17% top", "top+=27% top", "top+=37% top"];
-
-      statItems.forEach((stat, index) => {
-        gsap.fromTo(
-          stat,
-          { opacity: 0, y: 24 },
+          0
+        )
+        .to(
+          noteRef.current,
           {
             opacity: 1,
             y: 0,
-            duration: 0.35,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: statStarts[index],
-              end: index === statItems.length - 1 ? "top+=45% top" : "top+=" + (12 + index * 4) + "% top",
-              toggleActions: "play none none reverse",
-            },
-          }
+            ease: "none",
+            duration: 0.18,
+          },
+          0.08
+        )
+        .to(
+          statItems[0],
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            duration: 0.14,
+          },
+          0.16
+        )
+        .to(
+          statItems[1],
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            duration: 0.14,
+          },
+          0.36
+        )
+        .to(
+          statItems[2],
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            duration: 0.14,
+          },
+          0.56
+        )
+        .to(
+          statItems[3],
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            duration: 0.14,
+          },
+          0.76
         );
-      });
 
       gsap.to(cueRef.current, {
         opacity: 0,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top+=6% top",
-          end: "top+=15% top",
+          start: "top top",
+          end: "top+=18% top",
           scrub: true,
         },
       });
@@ -110,7 +173,7 @@ export default function Hero() {
               ))}
             </h1>
 
-            <p className="hero-note">
+            <p ref={noteRef} className="hero-note">
               A focused interaction study built around scroll progress, clean
               typography, and one visual that moves with you.
             </p>
@@ -169,7 +232,14 @@ export default function Hero() {
               d="M43 90h14c4 0 7-3 7-7V72c0-4-3-7-7-7H43Z"
               fill="#d4ff4f"
             />
-            <rect x="249" y="82" width="13" height="7" rx="3.5" fill="#d4ff4f" />
+            <rect
+              x="249"
+              y="82"
+              width="13"
+              height="7"
+              rx="3.5"
+              fill="#d4ff4f"
+            />
             <rect
               x="160"
               y="87"
