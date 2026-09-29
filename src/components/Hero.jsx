@@ -200,7 +200,7 @@ export default function Hero() {
           <svg
             ref={carRef}
             className="car"
-            viewBox="0 0 320 150"
+            viewBox="0 0 320 122"
             aria-hidden="true"
           >
             <defs>
