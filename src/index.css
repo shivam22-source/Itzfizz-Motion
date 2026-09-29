@@ -35,7 +35,7 @@ body {
 
 .hero {
   position: relative;
-  min-height: 220vh;
+  min-height: 130vh;
   overflow: clip;
   background:
     radial-gradient(circle at 50% 30%, rgba(212, 255, 79, 0.16), transparent 28%),
