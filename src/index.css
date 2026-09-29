@@ -1,13 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #d8d8d8;
-  --foreground: #0b0b0b;
-  --green: #45d97d;
-  --yellow: #ddff2e;
-  --dark: #303030;
-  --blue: #63c1ee;
-  --orange: #ff7028;
+  --ink: #11120f;
+  --paper: #f3f0e8;
+  --line: rgba(17, 18, 15, 0.14);
+  --dark: #151713;
 }
 
 * {
@@ -20,229 +17,259 @@ html {
 
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.page-shell {
+  width: min(1180px, calc(100% - 40px));
+  margin-inline: auto;
 }
 
 .hero {
-  min-height: 200vh;
-  background: var(--background);
-  overflow: hidden;
+  position: relative;
+  min-height: 310vh;
+  overflow: clip;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(212, 255, 79, 0.16), transparent 28%),
+    linear-gradient(180deg, #f5f2eb 0%, #eae6dc 100%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 82%);
 }
 
 .hero-sticky {
   position: sticky;
   top: 0;
   height: 100vh;
-  min-height: 680px;
+  min-height: 640px;
   display: flex;
   align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
 
 .hero-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-row {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  padding-inline: 20px;
-  flex-wrap: wrap;
-}
-
-.stat-card {
-  width: min(260px, calc(50vw - 30px));
-  min-height: 150px;
-  padding: 26px 30px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  opacity: 0;
-  box-shadow: 0 9px 24px rgba(0, 0, 0, 0.06);
-}
-
-.stat-card strong {
-  display: block;
-  margin: 0;
-  font-size: clamp(3rem, 5vw, 4.2rem);
-  line-height: 0.9;
-  font-weight: 800;
-}
-
-.stat-card span {
-  display: block;
-  max-width: 220px;
-  margin-top: 12px;
-  font-size: 14px;
-  line-height: 1.35;
-}
-
-.stat-yellow {
-  background: var(--yellow);
-}
-
-.stat-dark {
-  color: white;
-  background: var(--dark);
-}
-
-.stat-blue {
-  background: var(--blue);
-}
-
-.stat-orange {
-  background: var(--orange);
-}
-
-.banner-wrap {
   position: relative;
-  width: 100%;
-  margin-block: 32px;
-  overflow: visible;
+  z-index: 2;
+  padding-top: 8vh;
 }
 
-.hero-banner {
-  width: 100%;
-  min-height: 200px;
-  padding-inline: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--green);
-  overflow: hidden;
+.hero-copy {
+  max-width: 930px;
 }
 
-.hero-banner h1 {
-  margin: 0;
-  color: #050505;
-  font-size: clamp(3.8rem, 10vw, 9rem);
-  line-height: 0.9;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  opacity: 0;
-}
-
-.car-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.car-layer > div {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 420px;
-  transform: translateY(-50%);
-  overflow: visible;
-}
-
-.car {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-  filter: drop-shadow(0 16px 16px rgba(0, 0, 0, 0.18));
-}
-
-.scroll-cue {
-  margin: 30px 0 0;
-  font-size: 13px;
-  font-weight: 500;
+.hero-kicker {
+  margin: 0 0 22px;
+  font-size: 12px;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
-@media (max-width: 800px) {
-  .hero-sticky {
-    min-height: 620px;
-  }
-
-  .stat-card {
-    width: min(260px, calc(50vw - 26px));
-    min-height: 130px;
-    padding: 20px;
-  }
-
-  .stat-card strong {
-    font-size: 2.6rem;
-  }
-
-  .stat-card span {
-    font-size: 12px;
-  }
-
-  .hero-banner {
-    min-height: 170px;
-  }
-
-  .hero-banner h1 {
-    font-size: clamp(2.8rem, 11vw, 5.5rem);
-  }
-
-  .car-layer > div {
-    width: 280px;
-  }
-
-  .scroll-cue {
-    margin-top: 22px;
-    font-size: 10px;
-  }
+.hero-title {
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 8rem);
+  line-height: 0.84;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-@media (max-width: 520px) {
-  .stat-row {
-    gap: 10px;
+.hero-title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.hero-note {
+  max-width: 430px;
+  margin: 28px 0 0;
+  color: #5f5f59;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.55;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 52px;
+  max-width: 900px;
+}
+
+.stat {
+  padding: 18px 18px 20px;
+  border-top: 1px solid var(--ink);
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.stat-value {
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1;
+  font-weight: 800;
+}
+
+.stat-label {
+  margin-top: 10px;
+  color: #5f5f59;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.motion-track {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 11vh;
+  height: 30%;
+  pointer-events: none;
+}
+
+.track-line {
+  position: absolute;
+  left: -8vw;
+  right: -8vw;
+  bottom: 23%;
+  height: 1px;
+  background: rgba(17, 18, 15, 0.34);
+}
+
+.track-dash {
+  position: absolute;
+  left: -8vw;
+  right: -8vw;
+  bottom: calc(23% - 9px);
+  height: 18px;
+  background: repeating-linear-gradient(
+    to right,
+    transparent 0 80px,
+    rgba(17, 18, 15, 0.14) 80px 108px
+  );
+}
+
+.car {
+  position: absolute;
+  left: 5%;
+  bottom: 16%;
+  width: clamp(150px, 22vw, 250px);
+  transform: translateX(0);
+  filter: drop-shadow(0 20px 20px rgba(17, 18, 15, 0.12));
+  will-change: transform;
+}
+
+.scroll-cue {
+  position: absolute;
+  right: 0;
+  bottom: 8%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #686861;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scroll-cue::after {
+  content: "";
+  width: 52px;
+  height: 1px;
+  background: currentColor;
+}
+
+.closing-section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  background: var(--dark);
+  color: var(--paper);
+}
+
+.closing-content {
+  padding-block: 100px;
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  color: #9da094;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.closing-content h2 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(2.6rem, 6vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.closing-content > p:last-child {
+  max-width: 520px;
+  margin: 32px 0 0;
+  color: #b6b8ae;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  .page-shell {
+    width: min(100% - 28px, 1180px);
   }
 
-  .stat-card {
-    width: min(175px, calc(50vw - 18px));
-    min-height: 108px;
-    padding: 14px;
-    border-radius: 9px;
+  .hero {
+    min-height: 270vh;
   }
 
-  .stat-card strong {
-    font-size: 2rem;
+  .hero-sticky {
+    min-height: 560px;
   }
 
-  .stat-card span {
-    margin-top: 8px;
-    font-size: 10px;
+  .hero-title {
+    font-size: clamp(2.8rem, 15vw, 5.7rem);
+    letter-spacing: 0.045em;
   }
 
-  .banner-wrap {
-    margin-block: 22px;
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 40px;
   }
 
-  .hero-banner {
-    min-height: 135px;
+  .stat {
+    padding-inline: 0 12px;
   }
 
-  .hero-banner h1 {
-    font-size: 13vw;
-    letter-spacing: 0.02em;
+  .motion-track {
+    bottom: 4vh;
+    height: 27%;
   }
 
-  .car-layer > div {
-    width: 210px;
+  .car {
+    left: -8%;
+    bottom: 13%;
+    width: 180px;
   }
 
   .scroll-cue {
-    margin-top: 12px;
+    bottom: 3%;
   }
 }
 
@@ -251,12 +278,9 @@ body {
     scroll-behavior: auto;
   }
 
-  .hero-banner {
-    transform: none !important;
-  }
-
-  .hero-banner h1,
-  .stat-card {
+  .hero-title span,
+  .stat {
     opacity: 1;
+    transform: none;
   }
 }
