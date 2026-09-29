@@ -40,57 +40,48 @@ export default function Hero() {
         stagger: 0.045,
       });
 
-      const scrollTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-        },
-      });
-
-      scrollTimeline
-        .fromTo(
-          carRef.current,
-          { x: "-34vw" },
-          {
-            x: "108vw",
-            ease: "none",
-            duration: 0.55,
+      gsap.fromTo(
+        carRef.current,
+        { x: "-34vw" },
+        {
+          x: "108vw",
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "top+=50% top",
+            scrub: 0.5,
           },
-          0
-        )
-        .fromTo(
-          statItems[0],
+        }
+      );
+
+      const statStarts = ["top+=8% top", "top+=18% top", "top+=28% top", "top+=38% top"];
+
+      statItems.forEach((stat, index) => {
+        gsap.fromTo(
+          stat,
           { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
-          0.06
-        )
-        .fromTo(
-          statItems[1],
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
-          0.20
-        )
-        .fromTo(
-          statItems[2],
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
-          0.34
-        )
-        .fromTo(
-          statItems[3],
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.12 },
-          0.48
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: statStarts[index],
+              end: index === statItems.length - 1 ? "top+=50% top" : "top+=" + (14 + index * 4) + "% top",
+              toggleActions: "play none none reverse",
+            },
+          }
         );
+      });
 
       gsap.to(cueRef.current, {
         opacity: 0,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top top",
+          start: "top+=12% top",
           end: "top+=25% top",
           scrub: true,
         },
