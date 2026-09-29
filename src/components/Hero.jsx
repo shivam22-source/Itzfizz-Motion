@@ -1,183 +1,198 @@
-"use client";
-
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const stats = [
-  { value: "58%", label: "Increase in pick up point use", style: "stat-yellow" },
-  { value: "27%", label: "Increase in pick up point use", style: "stat-dark" },
-  { value: "23%", label: "Decreased in customer phone calls", style: "stat-blue" },
-  { value: "40%", label: "Decreased in customer phone calls", style: "stat-orange" },
+  { value: "58%", label: "Increase in pick up point use", variant: "yellow" },
+  { value: "27%", label: "Increase in pick up point use", variant: "dark" },
+  { value: "23%", label: "Decreased in customer phone calls", variant: "blue" },
+  { value: "40%", label: "Decreased in customer phone calls", variant: "orange" },
 ];
+
+function StatCard({ value, label, variant, delay }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(ref.current, { opacity: 1, y: 0, scale: 1 });
+      return;
+    }
+
+    gsap.fromTo(
+      ref.current,
+      { opacity: 0, y: 40, scale: 0.92 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.7,
+        delay,
+        ease: "power3.out",
+      }
+    );
+  }, [delay]);
+
+  return (
+    <article ref={ref} className={`stat-card stat-${variant}`}>
+      <strong>{value}</strong>
+      <span>{label}</span>
+    </article>
+  );
+}
+
+function Car() {
+  return (
+    <svg className="car" viewBox="0 0 420 190" aria-hidden="true">
+      <defs>
+        <linearGradient id="car-orange" x1="0" x2="1">
+          <stop offset="0%" stopColor="#ee6a08" />
+          <stop offset="100%" stopColor="#ff8b18" />
+        </linearGradient>
+        <linearGradient id="glass" x1="0" x2="1">
+          <stop offset="0%" stopColor="#1a1b1a" />
+          <stop offset="100%" stopColor="#353935" />
+        </linearGradient>
+      </defs>
+
+      <path
+        d="M52 111h33l28-47c7-12 19-19 33-19h91c16 0 30 8 40 20l28 34h50c8 0 14 6 14 14v15H52z"
+        fill="url(#car-orange)"
+      />
+      <path
+        d="M126 63h92c9 0 18 4 24 11l21 24H109l16-26c1-5 5-9 1-9Z"
+        fill="url(#glass)"
+      />
+      <path
+        d="M140 67h34v30h-49zM181 67h35c8 0 15 3 20 9l14 21h-69z"
+        fill="#aeb4ad"
+        opacity=".84"
+      />
+      <path d="M58 109h40" stroke="#151713" strokeWidth="8" strokeLinecap="round" />
+      <path d="M302 104h23" stroke="#ffd34e" strokeWidth="8" strokeLinecap="round" />
+
+      <circle cx="118" cy="134" r="31" fill="#121312" />
+      <circle cx="118" cy="134" r="13" fill="#777b75" />
+      <circle cx="300" cy="134" r="31" fill="#121312" />
+      <circle cx="300" cy="134" r="13" fill="#777b75" />
+
+      <path
+        d="M350 105h26c8 0 14 6 14 14v12h-40z"
+        fill="#d8ff3f"
+      />
+      <path
+        d="M52 112h19v18H52z"
+        fill="#d8ff3f"
+      />
+    </svg>
+  );
+}
 
 export default function Hero() {
   const sectionRef = useRef(null);
-  const bannerRef = useRef(null);
-  const titleRef = useRef(null);
   const carRef = useRef(null);
-  const statRefs = useRef([]);
+  const headlineRef = useRef(null);
+  const bannerRef = useRef(null);
 
-  useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
+  useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return undefined;
+      return;
     }
 
-    const context = gsap.context(() => {
-      const titleLetters = titleRef.current.querySelectorAll("span");
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        bannerRef.current,
+        { scaleX: 0, transformOrigin: "left center" },
+        {
+          scaleX: 1,
+          duration: 0.9,
+          delay: 0.2,
+          ease: "power4.inOut",
+        }
+      );
 
-      const intro = gsap.timeline({
-        defaults: { ease: "power3.out" },
+      gsap.fromTo(
+        headlineRef.current,
+        { opacity: 0, letterSpacing: "0.5em" },
+        {
+          opacity: 1,
+          letterSpacing: "0.04em",
+          duration: 1,
+          delay: 0.6,
+          ease: "power3.out",
+        }
+      );
+
+      gsap.set(carRef.current, {
+        x: "80vw",
+        willChange: "transform",
       });
-
-      intro
-        .fromTo(
-          bannerRef.current,
-          { scaleX: 0, transformOrigin: "center center" },
-          { scaleX: 1, duration: 0.9 }
-        )
-        .fromTo(
-          titleLetters,
-          {
-            opacity: 0,
-            y: 28,
-            letterSpacing: "0.12em",
-          },
-          {
-            opacity: 1,
-            y: 0,
-            letterSpacing: "0.035em",
-            duration: 1,
-            stagger: 0.04,
-          },
-          "-=0.55"
-        )
-        .fromTo(
-          statRefs.current.filter(Boolean),
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.55,
-            stagger: 0.12,
-          },
-          "-=0.45"
-        );
 
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
         end: "bottom top",
-        scrub: 0.35,
+        scrub: 1.5,
         onUpdate: (self) => {
-          const x = 80 - self.progress * 160;
+          const xValue = 80 - self.progress * 160;
 
           gsap.set(carRef.current, {
-            x: x + "vw",
+            x: `${xValue}vw`,
             force3D: true,
           });
         },
       });
     }, sectionRef);
 
-    return () => context.revert();
+    return () => ctx.revert();
   }, []);
 
-  const headline = "WELCOME ITZFIZZ";
-
   return (
-    <section ref={sectionRef} className="hero" aria-labelledby="hero-title">
+    <section ref={sectionRef} className="hero">
       <div className="hero-sticky">
-        <div className="hero-background" aria-hidden="true" />
-
-        <div ref={bannerRef} className="hero-banner" aria-hidden="true" />
-
-        <div className="hero-shell">
-          <p className="hero-kicker">Scroll-driven digital motion</p>
-
-          <h1 id="hero-title" ref={titleRef} className="hero-title">
-            {headline.split("").map((character, index) => (
-              <span key={index}>
-                {character === " " ? "\u00a0" : character}
-              </span>
-            ))}
-          </h1>
-
-          <div className="stats stats-top" aria-label="Illustrative metrics">
-            {stats.slice(0, 2).map((stat, index) => (
-              <article
-                className={`stat-card ${stat.style}`}
-                key={stat.value}
-                ref={(element) => {
-                  statRefs.current[index] = element;
-                }}
-              >
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </article>
-            ))}
+        <div className="hero-content">
+          <div className="stat-row">
+            <StatCard
+              value={stats[0].value}
+              label={stats[0].label}
+              variant={stats[0].variant}
+              delay={0.8}
+            />
+            <StatCard
+              value={stats[1].value}
+              label={stats[1].label}
+              variant={stats[1].variant}
+              delay={1}
+            />
           </div>
 
-          <div className="stats stats-bottom" aria-label="Illustrative metrics">
-            {stats.slice(2).map((stat, index) => (
-              <article
-                className={`stat-card ${stat.style}`}
-                key={stat.value}
-                ref={(element) => {
-                  statRefs.current[index + 2] = element;
-                }}
-              >
-                <strong>{stat.value}</strong>
-                <span>{stat.label}</span>
-              </article>
-            ))}
+          <div className="banner-wrap">
+            <div ref={bannerRef} className="hero-banner">
+              <h1 ref={headlineRef}>WELCOME ITZFIZZ</h1>
+            </div>
+
+            <div className="car-layer">
+              <div ref={carRef}>
+                <Car />
+              </div>
+            </div>
           </div>
 
-          <div className="track-line" aria-hidden="true" />
-          <div className="track-dash" aria-hidden="true" />
-
-          <svg
-            ref={carRef}
-            className="car"
-            viewBox="0 0 320 150"
-            aria-hidden="true"
-          >
-            <defs>
-              <linearGradient id="carBody" x1="0" x2="1">
-                <stop offset="0%" stopColor="#151713" />
-                <stop offset="100%" stopColor="#373a31" />
-              </linearGradient>
-            </defs>
-
-            <path
-              d="M47 91h27l24-42c4-7 11-11 19-11h58c8 0 16 4 22 10l25 29h33c8 0 14 6 14 14v11H47Z"
-              fill="url(#carBody)"
+          <div className="stat-row">
+            <StatCard
+              value={stats[2].value}
+              label={stats[2].label}
+              variant={stats[2].variant}
+              delay={1.2}
             />
-            <path
-              d="M106 49h68c6 0 11 3 15 7l18 21H92l12-21c1-4 5-7 8-7Z"
-              fill="#cbd0c2"
+            <StatCard
+              value={stats[3].value}
+              label={stats[3].label}
+              variant={stats[3].variant}
+              delay={1.4}
             />
-            <path
-              d="M127 50h42l11 23h-61Z"
-              fill="#1e211d"
-              opacity="0.9"
-            />
-            <circle cx="92" cy="103" r="19" fill="#11120f" />
-            <circle cx="92" cy="103" r="8" fill="#777970" />
-            <circle cx="223" cy="103" r="19" fill="#11120f" />
-            <circle cx="223" cy="103" r="8" fill="#777970" />
-            <path
-              d="M43 90h14c4 0 7-3 7-7V72c0-4-3-7-7-7H43Z"
-              fill="#d4ff4f"
-            />
-            <rect x="249" y="82" width="13" height="7" rx="3.5" fill="#d4ff4f" />
-          </svg>
-
-          <div className="scroll-cue" aria-hidden="true">
-            Scroll to move
           </div>
+
+          <p className="scroll-cue">Scroll to drive</p>
         </div>
       </div>
     </section>
