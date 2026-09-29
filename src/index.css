@@ -59,7 +59,6 @@ body {
   position: sticky;
   top: 0;
   height: 100vh;
-  min-height: 640px;
   display: flex;
   align-items: center;
   overflow: clip;
@@ -252,10 +251,6 @@ body {
 }
 
 @media (max-width: 800px) {
-  .hero-sticky {
-    min-height: 560px;
-  }
-
   .hero-content {
     padding-top: 3vh;
     padding-bottom: 17vh;
